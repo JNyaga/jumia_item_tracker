@@ -11,32 +11,37 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 import time
+import schedule
 
 
 # In[2]:
 
-
-URL= 'https://www.jumia.co.ke/xiaomi-redmi-9a-6.53-2gb32gb-13.0mp-5000mah-4g-lte-dual-sim-grey-30887170.html'
-headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
-
-
-# In[3]:
+def job():
+    URL= 'https://www.jumia.co.ke/xiaomi-redmi-9a-6.53-2gb32gb-13.0mp-5000mah-4g-lte-dual-sim-grey-30887170.html'
+    headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'}
 
 
-page= requests.get(URL, headers= headers)
-
-soup= BeautifulSoup(page.content,'html.parser')
+    # In[3]:
 
 
-# In[9]:
+    page= requests.get(URL, headers= headers)
+
+    soup= BeautifulSoup(page.content,'html.parser')
 
 
-# use class_ to get css class
-title= soup.find(class_="-fs20 -pts -pbxs").get_text()
-price= soup.find(class_="-b -ltr -tal -fs24").get_text()
-#convert price to float and removing the commma
-converted_price = float(price[4:].replace(',',''))
-converted_price
+    # In[9]:
+
+
+    # use class_ to get css class
+    title= soup.find(class_="-fs20 -pts -pbxs").get_text()
+    price= soup.find(class_="-b -ltr -tal -fs24").get_text()
+    #convert price to float and removing the commma
+    converted_price = float(price[4:].replace(',',''))
+    #converted_price
+    if converted_price< 10000.0:
+    send_mail()
+   
+
 
 
 # In[5]:
@@ -61,12 +66,12 @@ def send_mail():
     print('SENT MESSAGE')
     server.quit()
 
+  schedule.every(1).minutes.at(":00").do(job)
+  
 
 # In[8]:
 
 
-if converted_price< 8000.0:
-    send_mail()
 
 
 # # Below is the program to find all class in a URL.(test program)
