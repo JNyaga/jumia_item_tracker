@@ -39,7 +39,9 @@ def job():
     converted_price = float(price[4:].replace(',',''))
     #converted_price
     if converted_price< 10000.0:
-    send_mail()
+        send_mail()
+    else:
+        print("Hello world!")
    
 
 
