@@ -38,7 +38,7 @@ def job():
     #convert price to float and removing the commma
     converted_price = float(price[4:].replace(',',''))
     #converted_price
-    if converted_price< 10000.0:
+    if converted_price<= 8000:
         send_mail()
    
 
@@ -68,9 +68,9 @@ def send_mail():
 
 # schedule.every(1).minutes.at(":00").do(job)
 x=0
-while x<4:
+while True:
     job()
-    x+=1
+    time.sleep(3600*12)
 
   
 
