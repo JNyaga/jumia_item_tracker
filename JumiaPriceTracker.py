@@ -66,7 +66,12 @@ def send_mail():
     print('SENT MESSAGE')
     server.quit()
 
-schedule.every(1).minutes.at(":00").do(job)
+# schedule.every(1).minutes.at(":00").do(job)
+x=0
+while x<4:
+    job()
+    x+=1
+
   
 
 # In[8]:
