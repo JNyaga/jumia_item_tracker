@@ -40,8 +40,6 @@ def job():
     #converted_price
     if converted_price< 10000.0:
         send_mail()
-    else:
-        print("Hello world!")
    
 
 
@@ -56,7 +54,7 @@ def send_mail():
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('joelnyagamuriithi@gmail.com', 'qmcxewoeqkbyqsvw')
+    server.login('joelnyagamuriithi@gmail.com', 'iqfpcreapyxjtulu')
     subject= 'Price Fell Down!'
     body= f'check the link {URL}'
     msg= f'Subject: {subject}\n\n{body}'
@@ -67,6 +65,7 @@ def send_mail():
     )
     print('SENT MESSAGE')
     server.quit()
+
 schedule.every(1).minutes.at(":00").do(job)
   
 
