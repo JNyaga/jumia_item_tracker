@@ -40,6 +40,8 @@ def job():
     #converted_price
     if converted_price<= 8000:
         send_mail()
+    else:
+        print('Not Yet')
    
 
 
@@ -68,9 +70,10 @@ def send_mail():
 
 # schedule.every(1).minutes.at(":00").do(job)
 x=0
-while True:
-    job()
-    time.sleep(3600*12)
+job()
+# while True:
+#     job()
+#     time.sleep(3600*12)
 
   
 
