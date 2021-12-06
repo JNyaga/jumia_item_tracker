@@ -70,10 +70,9 @@ def send_mail():
 
 # schedule.every(1).minutes.at(":00").do(job)
 x=0
-job()
-# while True:
-#     job()
-#     time.sleep(3600*12)
+while True:
+    job()
+    time.sleep(3600*12)
 
   
 
