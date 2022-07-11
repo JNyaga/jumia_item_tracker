@@ -1,0 +1,29 @@
+How to get height of entire document with JavaScript?
+var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+
+function scrollWin() {
+  window.scrollBy(0, window.screen.height);
+}
+
+window.scrollBy(0, window.innerHeight);
+
+from selenium import webdriver
+
+browser = webdriver.Firefox()
+browser.get('http://www.google.com/')
+browser.save_screenshot('screenie.png')
+
+
+im = Image.open('image.jpg') 
+im = im.crop((left, top, width, height))
+
+
+
+div_elem = driver.some_method_to_find_element()
+new_style = div_elem.get_attribute('style').replace('transform 1000ms', 'transform 200ms')
+driver.execute_script('arguments[0].setAttribute("style", "%s")' % new_style, div_elem)

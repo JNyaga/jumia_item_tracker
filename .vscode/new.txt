@@ -1,0 +1,90 @@
+import os
+from PIL import Image
+import re
+
+#Open leading img
+img1 = Image.open('./Screenshotscrop/screen0.png')
+img1=img1.convert("RGB")
+#open the rest of images
+img_list = os.listdir("./Screenshotscrop")[1:]
+
+#the above comand distorts the order of file we need to sort them
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+    '''
+    alist.sort(key=natural_keys) sorts in human order
+    '''
+    # '\d+' denotes Numeric Characters or group of characters
+    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+# img_list.sort(key= natural_keys)
+imgListsorted = sorted(img_list, key=natural_keys)
+    
+imgListOpened = [Image.open(f"./Screenshotscrop/{img}") for img in imgListsorted]
+imgList_convert= [img.convert("RGB") for img in imgListOpened]
+# img.save("bash.pdf","PDF", resolution=100.0)
+img1.save("bash.pdf","PDF", resolution=100.0,save_all=True, append_images=imgList_convert)
+
+
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from PIL import Image
+from io import BytesIO
+import os
+
+import time
+
+URL ="https://medium.com/sysf/bash-scripting-everything-you-need-to-know-about-bash-shell-programming-cd08595f2fba"
+driver = webdriver.Chrome()
+driver.get(URL)
+time.sleep(10)
+driver.maximize_window()
+removeDiv = driver.find_element(By.XPATH,"//*[@id=\"root\"]/div/div[3]/div/div/main/div/div[3]/div[3]/div")
+driver.execute_script("""
+var element = arguments[0];
+element.parentNode.removeChild(element);
+""", removeDiv)
+
+
+# Get scroll height
+first_height= 0
+last_height = driver.execute_script("return document.body.scrollHeight")
+time.sleep(5)
+countScroll=0
+# png=driver.get_screenshot_as_png()
+
+while True:
+    name= os.path.join(os.path.dirname(os.path.realpath("./IMDB_reviews.ipynb")), 'Screenshots',f'screen{countScroll}.png')
+    driver.save_screenshot(name)
+    # driver.save_screenshot(f'screenshots/screen{countScroll}.png')
+    driver.execute_script("window.scrollBy(0, window.innerHeight);")
+    first_height+=driver.execute_script("return window.innerHeight")
+    countScroll+=1
+    time.sleep(10)
+    if first_height>=last_height:
+        break
+
+
+
+
+
+
+
+
+# last_height
+# im = Image.open(BytesIO(png))
+# im.save('screenshot.png')
+import os
+  
+# Get the list of all files and directories
+# in the root directory
+# path = "/"
+dir_list = os.listdir("./Screenshots")
+
+for i in range(len(dir_list)):
+    im = Image.open(f'./Screenshots/screen{i}.png') 
+    im = im.crop((76,0, 948, 609))
+    im.save(f'./Screenshotscrop/screen{i}.png')
